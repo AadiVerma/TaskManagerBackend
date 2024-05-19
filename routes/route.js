@@ -122,5 +122,58 @@ router.get('/get',async(req,res)=>{
         })
     }
 })
+router.get('/important',async(req,res)=>{
+    const userId='663dd5f4471103e72f3221e7';
+    if(!userId){
+       return res.status(404).json({
+           message:"User not found",
+       })
+    }
+    try {
+        const data=await Tasks.findOne({userId:userId});
+        const impdata=data.Alltasks.filter(task => task.importanttasks);
+        return res.status(200).send(impdata);
+    } catch (error) {
+        return res.status(401).json({
+            message:"Internal Server Error",
+        })
+    }
+})
+router.get('/completed',async(req,res)=>{
+    const userId='663dd5f4471103e72f3221e7';
+    if(!userId){
+       return res.status(404).json({
+           message:"User not found",
+       })
+    }
+    try {
+        const data=await Tasks.findOne({userId:userId});
+        const impdata=data.Alltasks.filter(task => task.maskAsCompleted);
+        return res.status(200).send(impdata);
+    } catch (error) {
+        return res.status(401).json({
+            message:"Internal Server Error",
+        })
+    }
+})
+router.get('/progress',async(req,res)=>{
+    const userId='663dd5f4471103e72f3221e7';
+    if(!userId){
+       return res.status(404).json({
+           message:"User not found",
+       })
+    }
+    try {
+        const data=await Tasks.findOne({userId:userId});
+        const impdata=data.Alltasks.filter(task => !task.maskAsCompleted);
+        return res.status(200).send(impdata);
+    } catch (error) {
+        return res.status(401).json({
+            message:"Internal Server Error",
+        })
+    }
+})
+
+
 
 module.exports = router;
