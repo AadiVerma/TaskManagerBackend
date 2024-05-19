@@ -50,6 +50,11 @@ const TasksSchema=new mongoose.Schema({
         type:Boolean,
         default:false,
         required:optional 
+    },
+    importanttasks:{
+        type:Boolean,
+        default:false,
+        required:optional  
     }
 }
    ]
