@@ -122,6 +122,30 @@ router.get('/get',async(req,res)=>{
         })
     }
 })
+
+router.post('/Task/important/:taskId',async (req,res)=>{
+    const userId='663dd5f4471103e72f3221e7';
+    const taskId = req.params.taskId;
+    if(!userId){
+       return res.status(404).json({
+           message:"User not found",
+       })
+    }
+    console.log(taskId);
+    try {
+        const data=await Tasks.findOneAndUpdate({userId:userId,"Alltasks._id": taskId},
+            { $set: { "Alltasks.$.importanttasks": true } },
+            { new: true });
+            if (!data) {
+                return res.status(404).json({ message: "Task not found" });
+            }
+            return res.status(200).send(task);
+    } catch (error) {
+        return res.status(401).json({
+            message:"Internal Server Error",
+        })
+    }
+})
 router.get('/important',async(req,res)=>{
     const userId='663dd5f4471103e72f3221e7';
     if(!userId){
